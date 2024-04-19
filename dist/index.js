@@ -31169,9 +31169,14 @@ async function run() {
   core.info('end action')
 }
 
+async function main() {
+  await run()
+  core.info('确实结束了')
+}
+
 // run the action
 try {
-  run()
+  main()
 } catch (error) {
   core.setFailed(error.message)
 }
