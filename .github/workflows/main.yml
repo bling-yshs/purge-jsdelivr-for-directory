@@ -1,0 +1,18 @@
+on: [ push ]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: bling-yshs/purge-jsdelivr-for-directory
+        with:
+          path: |
+            img
+            picture
+          retry: 10
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
