@@ -91,7 +91,9 @@ async function run() {
 
 // run the action
 try {
-  run()
+  run().then(() => {
+    core.info('确实结束了')
+  })
 } catch (error) {
   core.setFailed(error.message)
 }
