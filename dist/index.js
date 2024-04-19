@@ -31157,7 +31157,7 @@ async function run() {
         core.error(`⛔️refresh failed: ${url}`)
         break
       }
-      const cdnResponse = await http.get('https://www.google.com')
+      const cdnResponse = await http.get(url)
       if (cdnResponse.message.statusCode === 200) {
         core.info(`✅️ ${url}`)
         break
