@@ -39,58 +39,58 @@ async function run() {
     result.branchName = actionInput.retry
   }
 
-  const cdnList = []
-  // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
-  const octokit = github.getOctokit(result.token)
-  for (const path of result.path) {
-    core.info(
-      `${result.branchName}|||
-      ${github.context.payload.repository.owner.name}|||
-      ${github.context.payload.repository.name}|||
-      ${path}
-      `
-    )
-    const response = await octokit.request(
-      `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
-      {
-        owner: github.context.payload.repository.owner.name,
-        repo: github.context.payload.repository.name,
-        path,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
-        }
-      }
-    )
-    const infoList = response.data
-    for (const infoListElement of infoList) {
-      if (infoListElement.type === 'dir') {
-        continue
-      }
-      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
-      cdnList.push(url)
-    }
-  }
-  core.info(`urls：${JSON.stringify(cdnList)}`)
-  const http = new httpClient.HttpClient()
-  for (const url of cdnList) {
-    for (let i = 0; i < result.retry + 1; i++) {
-      if (i === result.retry) {
-        core.error(`⛔️refresh failed: ${url}`)
-        break
-      }
-      const cdnResponse = await http.get(url)
-      if (cdnResponse.message.statusCode === 200) {
-        core.info(`✅️ ${url}`)
-        break
-      }
-      core.error(`刷新失败${url}`)
-    }
-  }
+  // const cdnList = []
+  // // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
+  // const octokit = github.getOctokit(result.token)
+  // for (const path of result.path) {
+  //   core.info(
+  //     `${result.branchName}|||
+  //     ${github.context.payload.repository.owner.name}|||
+  //     ${github.context.payload.repository.name}|||
+  //     ${path}
+  //     `
+  //   )
+  //   const response = await octokit.request(
+  //     `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
+  //     {
+  //       owner: github.context.payload.repository.owner.name,
+  //       repo: github.context.payload.repository.name,
+  //       path,
+  //       headers: {
+  //         'X-GitHub-Api-Version': '2022-11-28'
+  //       }
+  //     }
+  //   )
+  //   const infoList = response.data
+  //   for (const infoListElement of infoList) {
+  //     if (infoListElement.type === 'dir') {
+  //       continue
+  //     }
+  //     const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
+  //     cdnList.push(url)
+  //   }
+  // }
+  // core.info(`urls：${JSON.stringify(cdnList)}`)
+  // const http = new httpClient.HttpClient()
+  // for (const url of cdnList) {
+  //   for (let i = 0; i < result.retry + 1; i++) {
+  //     if (i === result.retry) {
+  //       core.error(`⛔️refresh failed: ${url}`)
+  //       break
+  //     }
+  //     const cdnResponse = await http.get(url)
+  //     if (cdnResponse.message.statusCode === 200) {
+  //       core.info(`✅️ ${url}`)
+  //       break
+  //     }
+  //     core.error(`刷新失败${url}`)
+  //   }
+  // }
   core.info('end action')
 }
 
 async function main() {
-  // await run()
+  await run()
   core.info('确实结束了')
 }
 
