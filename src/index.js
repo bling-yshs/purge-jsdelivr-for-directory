@@ -16,6 +16,7 @@ async function run() {
   if (Number.isNaN(actionInput.retry) || actionInput.retry <= 0) {
     actionInput.retry = 3
   }
+  core.info('开始运行')
   // get branch name
   const fullRef = github.context.ref
   const branchName = fullRef.split('/')[2]
