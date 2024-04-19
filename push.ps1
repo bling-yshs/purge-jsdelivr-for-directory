@@ -1,4 +1,4 @@
-npm run package
+npm run all
 git add .
 git commit -m "test"
 git tag -d v1.0

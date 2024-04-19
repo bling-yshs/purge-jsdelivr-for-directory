@@ -38,7 +38,7 @@ async function run() {
   } else {
     result.branchName = actionInput.retry
   }
-  
+
   const cdnList = []
   // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
   const octokit = github.getOctokit(result.token)
