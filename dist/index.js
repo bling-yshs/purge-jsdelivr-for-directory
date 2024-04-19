@@ -31098,7 +31098,7 @@ async function run() {
     actionInput.retry = 3
   }
   // get branch name
-  core.info(github.context)
+  core.info(JSON.stringify(github.context))
   const fullRef = github.context.ref
   const branchName = fullRef.split('/')[2]
   const cdnList = []
