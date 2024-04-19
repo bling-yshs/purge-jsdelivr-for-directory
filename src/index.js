@@ -61,16 +61,16 @@ async function run() {
         }
       }
     )
-  //   const infoList = response.data
-  //   for (const infoListElement of infoList) {
-  //     if (infoListElement.type === 'dir') {
-  //       continue
-  //     }
-  //     const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
-  //     cdnList.push(url)
-  //   }
-  // }
-  // core.info(`urls：${JSON.stringify(cdnList)}`)
+    const infoList = response.data
+    for (const infoListElement of infoList) {
+      if (infoListElement.type === 'dir') {
+        continue
+      }
+      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
+      cdnList.push(url)
+    }
+  }
+  core.info(`urls：${JSON.stringify(cdnList)}`)
   // const http = new httpClient.HttpClient()
   // for (const url of cdnList) {
   //   for (let i = 0; i < result.retry + 1; i++) {
@@ -86,7 +86,7 @@ async function run() {
   //     core.error(`刷新失败${url}`)
   //   }
   // }
-  core.info('end action')
+  // core.info('end action')
 }
 
 async function main() {
