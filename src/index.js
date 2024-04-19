@@ -8,25 +8,42 @@ const actionInput = {
     .getInput('path', { required: true })
     .split('\n')
     .map(url => url.trim()),
-  retry: parseInt(core.getInput('retry'), 10)
+  retry: parseInt(core.getInput('retry'), 10),
+  branchName: core.getInput('branchName')
+}
+
+const result = {
+  token: undefined,
+  path: undefined,
+  retry: undefined,
+  branchName: undefined
 }
 
 async function run() {
   core.info('start action')
   // processInput
+  // token
+  result.token = actionInput.token
+  // path
+  result.path = actionInput.path
   if (Number.isNaN(actionInput.retry) || actionInput.retry <= 0) {
-    actionInput.retry = 3
+    result.retry = 10
+  } else {
+    result.retry = actionInput.retry
   }
-  // get branch name
-  core.info(JSON.stringify(github.context))
-  const fullRef = github.context.ref
-  const branchName = fullRef.split('/')[2]
+  // branchName
+  if (actionInput.branchName === '') {
+    result.branchName = github.context.payload.repository.master_branch
+  } else {
+    result.branchName = actionInput.retry
+  }
+
   const cdnList = []
   // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
-  const octokit = github.getOctokit(actionInput.token)
-  for (const path of actionInput.path) {
+  const octokit = github.getOctokit(result.token)
+  for (const path of result.path) {
     const response = await octokit.request(
-      `GET /repos/{owner}/{repo}/contents/{path}?ref=${branchName}`,
+      `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
       {
         owner: github.context.payload.repository.owner.name,
         repo: github.context.payload.repository.name,
@@ -42,7 +59,7 @@ async function run() {
       if (infoListElement.type === 'dir') {
         continue
       }
-      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${branchName}/${infoListElement.path}`
+      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
       cdnList.push(url)
     }
   }
