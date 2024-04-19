@@ -31150,8 +31150,6 @@ async function run() {
       cdnList.push(url)
     }
   }
-  core.info(`urls：${JSON.stringify(cdnList)}`)
-  core.startGroup()
   const http = new httpClient.HttpClient()
   for (const url of cdnList) {
     for (let i = 0; i < result.retry + 1; i++) {
