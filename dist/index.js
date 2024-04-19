@@ -31140,8 +31140,7 @@ async function run() {
         }
       }
     )
-    core.info(`信息：${JSON.stringify(response.data)}`)
-    const infoList = response.data.data
+    const infoList = response.data
     for (const infoListElement of infoList) {
       if (infoListElement.type === 'dir') {
         continue
