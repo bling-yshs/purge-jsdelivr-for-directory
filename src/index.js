@@ -16,7 +16,7 @@ async function run() {
     actionInput.retry = 3
   }
   core.info(`值为${actionInput.retry}，路径为${actionInput.path}`)
-  const info = JSON.stringify(github.context.repo)
+  const info = JSON.stringify(github.context)
   core.info(`信息：${info}`)
   core.info('end')
 }
