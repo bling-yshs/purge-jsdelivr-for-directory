@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: bling-yshs/purge-jsdelivr-for-directory@v1.2
+        uses: bling-yshs/purge-jsdelivr-for-directory@v1.1
         with:
           path: |
             img
