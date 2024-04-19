@@ -31100,6 +31100,7 @@ async function run() {
   // get branch name
   const fullRef = github.context.ref
   const branchName = fullRef.split('/')[2]
+  core.info(branchName)
   const cdnList = []
   // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
   const octokit = github.getOctokit(actionInput.token)
