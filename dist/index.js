@@ -31151,22 +31151,23 @@ async function run() {
     }
   }
   core.info(`urls：${JSON.stringify(cdnList)}`)
-  // const http = new httpClient.HttpClient()
-  // for (const url of cdnList) {
-  //   for (let i = 0; i < result.retry + 1; i++) {
-  //     if (i === result.retry) {
-  //       core.error(`⛔️refresh failed: ${url}`)
-  //       break
-  //     }
-  //     const cdnResponse = await http.get(url)
-  //     if (cdnResponse.message.statusCode === 200) {
-  //       core.info(`✅️ ${url}`)
-  //       break
-  //     }
-  //     core.error(`刷新失败${url}`)
-  //   }
-  // }
-  // core.info('end action')
+  core.startGroup()
+  const http = new httpClient.HttpClient()
+  for (const url of cdnList) {
+    for (let i = 0; i < result.retry + 1; i++) {
+      if (i === result.retry) {
+        core.error(`⛔️refresh failed: ${url}`)
+        break
+      }
+      // const cdnResponse = await http.get(url)
+      // if (cdnResponse.message.statusCode === 200) {
+      //   core.info(`✅️ ${url}`)
+      //   break
+      // }
+      // core.error(`刷新失败${url}`)
+    }
+  }
+  core.info('end action')
 }
 
 async function main() {
