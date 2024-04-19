@@ -31170,7 +31170,7 @@ async function run() {
 }
 
 async function main() {
-  await run()
+  // await run()
   core.info('确实结束了')
 }
 
