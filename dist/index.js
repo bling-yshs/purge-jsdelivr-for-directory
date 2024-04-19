@@ -31159,12 +31159,12 @@ async function run() {
         core.error(`⛔️refresh failed: ${url}`)
         break
       }
-      // const cdnResponse = await http.get(url)
-      // if (cdnResponse.message.statusCode === 200) {
-      //   core.info(`✅️ ${url}`)
-      //   break
-      // }
-      // core.error(`刷新失败${url}`)
+      const cdnResponse = await http.get(url)
+      if (cdnResponse.message.statusCode === 200) {
+        core.info(`✅️ ${url}`)
+        break
+      }
+      core.error(`刷新失败${url}`)
     }
   }
   core.info('end action')
