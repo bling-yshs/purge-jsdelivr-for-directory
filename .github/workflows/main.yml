@@ -8,8 +8,9 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: bling-yshs/purge-jsdelivr-for-directory@v1.1
+        uses: bling-yshs/purge-jsdelivr-for-directory@v1.3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: |
             img
             picture

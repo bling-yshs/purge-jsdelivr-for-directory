@@ -31083,6 +31083,7 @@ const github = __nccwpck_require__(5438)
 
 // read action inputs
 const actionInput = {
+  token: core.getInput('token', { required: true }),
   path: core
     .getInput('path', { required: true })
     .split('\n')
@@ -31095,10 +31096,36 @@ async function run() {
   if (Number.isNaN(actionInput.retry) || actionInput.retry <= 0) {
     actionInput.retry = 3
   }
-  core.info(`值为${actionInput.retry}，路径为${actionInput.path}`)
-  const info = JSON.stringify(github.context.repo)
+  // get branch name
+  const fullRef = github.context.ref
+  const branchName = fullRef.split('/')[2]
+  const cdnList = []
+  // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
+  const octokit = github.getOctokit(actionInput.token)
+  for (const path of actionInput.path) {
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/contents/{path}?ref=${branchName}`,
+      {
+        owner: github.context.payload.repository.owner.name,
+        repo: github.context.payload.repository.name,
+        path,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      }
+    )
+    const infoList = response.data.data
+    for (const infoListElement of infoList) {
+      if (infoListElement.type === 'dir') {
+        continue
+      }
+      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${branchName}/${infoListElement.path}`
+      cdnList.push(url)
+    }
+  }
+  const info = JSON.stringify(cdnList)
   core.info(`信息：${info}`)
-  core.info('end')
+  core.info('apple end')
 }
 
 // run the action
