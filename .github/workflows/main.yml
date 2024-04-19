@@ -8,12 +8,9 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: bling-yshs/purge-jsdelivr-for-directory@v1.3
+        uses: bling-yshs/purge-jsdelivr-for-directory@v1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: |
             img
             picture
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
