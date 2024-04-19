@@ -39,28 +39,28 @@ async function run() {
     result.branchName = actionInput.retry
   }
 
-  // const cdnList = []
-  // // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
-  // const octokit = github.getOctokit(result.token)
-  // for (const path of result.path) {
-  //   core.info(
-  //     `${result.branchName}|||
-  //     ${github.context.payload.repository.owner.name}|||
-  //     ${github.context.payload.repository.name}|||
-  //     ${path}
-  //     `
-  //   )
-  //   const response = await octokit.request(
-  //     `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
-  //     {
-  //       owner: github.context.payload.repository.owner.name,
-  //       repo: github.context.payload.repository.name,
-  //       path,
-  //       headers: {
-  //         'X-GitHub-Api-Version': '2022-11-28'
-  //       }
-  //     }
-  //   )
+  const cdnList = []
+  // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
+  const octokit = github.getOctokit(result.token)
+  for (const path of result.path) {
+    core.info(
+      `${result.branchName}|||
+      ${github.context.payload.repository.owner.name}|||
+      ${github.context.payload.repository.name}|||
+      ${path}
+      `
+    )
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
+      {
+        owner: github.context.payload.repository.owner.name,
+        repo: github.context.payload.repository.name,
+        path,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      }
+    )
   //   const infoList = response.data
   //   for (const infoListElement of infoList) {
   //     if (infoListElement.type === 'dir') {
