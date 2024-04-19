@@ -31116,6 +31116,7 @@ async function run() {
       }
     )
     const infoList = response.data.data
+    core.info(`信息：${JSON.stringify(infoList)}`)
     for (const infoListElement of infoList) {
       if (infoListElement.type === 'dir') {
         continue
