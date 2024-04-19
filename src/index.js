@@ -86,13 +86,15 @@ async function run() {
       core.error(`刷新失败${url}`)
     }
   }
-  core.info('end')
-  core.endGroup()
+  core.info('结束了')
 }
 
 // run the action
 try {
   run()
+  core.info('真的结束了')
 } catch (error) {
   core.setFailed(error.message)
 }
+
+core.info('真的丁丁当当结束了')
