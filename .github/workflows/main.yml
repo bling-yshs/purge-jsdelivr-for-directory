@@ -12,6 +12,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: |
-            img
-            picture
-
+            dist
