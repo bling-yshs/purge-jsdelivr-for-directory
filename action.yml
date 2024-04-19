@@ -4,10 +4,12 @@ author: 'Your name or organization here'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
+  token:
     description: 'Your input description here'
     required: true
-    default: '1000'
+  path:
+    description: 'Your input description here'
+    required: true
 
 # Define your outputs here.
 outputs:
