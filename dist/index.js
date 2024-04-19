@@ -31167,6 +31167,7 @@ async function run() {
     }
   }
   core.info('end')
+  core.endGroup()
 }
 
 // run the action
