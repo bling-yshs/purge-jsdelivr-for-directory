@@ -31151,7 +31151,8 @@ async function run() {
     }
   }
   const http = new httpClient.HttpClient()
-  http.get('https://www.google.com')
+  const res = await http.get('https://www.google.com')
+  core.info(res.message.statusCode)
   // for (const url of cdnList) {
   //   for (let i = 0; i < result.retry + 1; i++) {
   //     if (i === result.retry) {
