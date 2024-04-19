@@ -1,5 +1,6 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
+const httpClient = require('@actions/http-client') // https://github.com/actions/http-client
 
 // read action inputs
 const actionInput = {
@@ -37,7 +38,7 @@ async function run() {
   } else {
     result.branchName = actionInput.retry
   }
-
+  
   const cdnList = []
   // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
   const octokit = github.getOctokit(result.token)
@@ -69,9 +70,21 @@ async function run() {
       cdnList.push(url)
     }
   }
-  const info = JSON.stringify(cdnList)
-  core.info(`信息：${info}`)
-  core.info('apple end')
+  core.info(`urls：${JSON.stringify(cdnList)}`)
+  const http = new httpClient.HttpClient()
+  for (const url of cdnList) {
+    for (let i = 0; i < result.retry + 1; i++) {
+      if (i === result.retry) {
+        core.error(`⛔️refresh failed: ${url}`)
+        break
+      }
+      const cdnResponse = await http.get(url)
+      if (cdnResponse.message.statusCode === 200) {
+        core.info(`✅️ ${url}`)
+        break
+      }
+    }
+  }
 }
 
 // run the action
