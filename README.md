@@ -6,6 +6,15 @@ Refresh the cache of jsdelivr for a folder in the current repository
 
 ## Usage
 
+## Inputs
+
+| name         | type               | Default               | Required | comment                                                                             |
+| ------------ | ------------------ | --------------------- | -------- | ----------------------------------------------------------------------------------- |
+| `token`      | `string`           | `${{ github.token }}` | false    | No need to set up                                                                   |
+| `path`       | `string` or `list` |                       | true     | The directory of the file that needs to "purge", support multiple directories       |
+| `retry`      | string             | 10                    | false    | If "purge" fails, the number of retries                                             |
+| `branchName` | string             |                       | false    | repository branch name, if left blank, it means is default branch of the repository |
+
 ### Example
 
 ```yaml
@@ -24,6 +33,10 @@ jobs:
         with:
           path: |
             rules
+            dir2
+            dir3
+            dir4
+          retry: '3'
 ```
 
 ### Example repository

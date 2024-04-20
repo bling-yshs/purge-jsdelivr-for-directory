@@ -31088,7 +31088,7 @@ const actionInput = {
   path: core
     .getInput('path', { required: true })
     .split('\n')
-    .map(url => url.trim()),
+    .map(path => path.trim()),
   retry: parseInt(core.getInput('retry'), 10),
   branchName: core.getInput('branchName')
 }
