@@ -5,11 +5,19 @@ author: 'bling-yshs'
 
 inputs:
   token:
-    description: 'Repo token, please type ${{ secrets.GITHUB_TOKEN }}'
-    required: true
+    description: 'Repo token'
+    default: ${{ github.repository }}
+    required: false
   path:
     description: 'Some directories in the current repository'
     required: true
+  retry:
+    description: 'retry times for each file'
+    default: '10'
+    required: false
+  branchName:
+    description: 'repo branch name'
+    required: false
 
 runs:
   using: node20
