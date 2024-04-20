@@ -1,8 +1,7 @@
 # purge-jsdelivr-for-directory
 
-## Action function
-
-Refresh the cache of jsdelivr for a folder in the current repository
+"purge" the jsdelivr cache for files in some directories in the current
+repository.
 
 ## Usage
 
@@ -11,7 +10,7 @@ Refresh the cache of jsdelivr for a folder in the current repository
 | name         | type               | Default               | Required | comment                                                                             |
 | ------------ | ------------------ | --------------------- | -------- | ----------------------------------------------------------------------------------- |
 | `token`      | `string`           | `${{ github.token }}` | false    | No need to set up                                                                   |
-| `path`       | `string` or `list` |                       | true     | The directory of the file that needs to "purge", support multiple directories       |
+| `path`       | `string` or `list` |                       | true     | The directories of the file that needs to "purge", support multiple directories     |
 | `retry`      | string             | 10                    | false    | If "purge" fails, the number of retries                                             |
 | `branchName` | string             |                       | false    | repository branch name, if left blank, it means is default branch of the repository |
 
