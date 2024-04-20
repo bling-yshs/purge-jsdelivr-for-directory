@@ -31107,29 +31107,25 @@ async function run() {
   result.token = actionInput.token
   // path
   result.path = actionInput.path
+  // Check if retry is a number and greater than 0, else set it to 10
   if (Number.isNaN(actionInput.retry) || actionInput.retry <= 0) {
     result.retry = 10
   } else {
     result.retry = actionInput.retry
   }
-  // branchName
+  // Set branchName to master_branch if it's empty, else set it to retry
   if (actionInput.branchName === '') {
     result.branchName = github.context.payload.repository.master_branch
   } else {
     result.branchName = actionInput.retry
   }
-
+  // Initialize cdnList as an empty array
   const cdnList = []
-  // https://purge.jsdelivr.net/gh/bling-yshs/custom-clash-rule@main/proxy.yaml
+  // Get the Octokit instance
   const octokit = github.getOctokit(result.token)
+  // Loop through each path in result.path
   for (const path of result.path) {
-    core.info(
-      `${result.branchName}|||
-      ${github.context.payload.repository.owner.name}|||
-      ${github.context.payload.repository.name}|||
-      ${path}
-      `
-    )
+    // Make a request to the GitHub API
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
       {
@@ -31141,41 +31137,46 @@ async function run() {
         }
       }
     )
+    // Get the data from the response
     const infoList = response.data
+    // Loop through each element in infoList
     for (const infoListElement of infoList) {
+      // Skip if the element is a directory
       if (infoListElement.type === 'dir') {
         continue
       }
+      // Construct the URL and add it to cdnList
       const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
       cdnList.push(url)
     }
   }
+  // Create a new HttpClient instance
   const http = new httpClient.HttpClient()
+  // Loop through each URL in cdnList
   for (const url of cdnList) {
+    // Try to refresh the URL result.retry times
     for (let i = 0; i < result.retry + 1; i++) {
+      // If all retries failed, log an error
       if (i === result.retry) {
         core.error(`⛔️refresh failed: ${url}`)
         break
       }
+      // Make a GET request to the URL
       const cdnResponse = await http.get(url)
+      // If the response status code is 200, log a success message and break the loop
       if (cdnResponse.message.statusCode === 200) {
         core.info(`✅️ ${url}`)
         break
       }
-      core.error(`刷新失败${url}`)
     }
   }
+  // This is the end of the run function
   core.info('end action')
-}
-
-async function main() {
-  await run()
-  core.info('确实结束了')
 }
 
 // run the action
 try {
-  main()
+  run()
 } catch (error) {
   core.setFailed(error.message)
 }
