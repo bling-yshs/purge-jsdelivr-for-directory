@@ -1,14 +1,14 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'purge-jsdelivr-for-directory'
+description:
+  'Refresh the cache of jsdelivr for a folder in the current repository'
+author: 'bling-yshs'
 
-# Define your inputs here.
 inputs:
   token:
-    description: 'Your input description here'
+    description: 'Repo token, please type ${{ secrets.GITHUB_TOKEN }}'
     required: true
   path:
-    description: 'Your input description here'
+    description: 'Some directories in the current repository'
     required: true
 
 runs:
