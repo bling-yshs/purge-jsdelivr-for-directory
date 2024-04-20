@@ -6,19 +6,21 @@ author: 'bling-yshs'
 inputs:
   token:
     description: 'Repo token'
-    default: ${{ github.token }}
     required: false
+    default: ${{ github.token }}
   path:
     description: 'Some directories in the current repository'
     required: true
   retry:
     description: 'retry times for each file'
+    required: false
     default: '10'
-    required: false
   branchName:
-    description: 'repo branch name, default is default branch of the repository'
-    default: ''
+    description:
+      'repo branch name, if left blank, it means is default branch of the
+      repository'
     required: false
+    default: ''
 
 runs:
   using: node20

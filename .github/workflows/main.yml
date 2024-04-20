@@ -1,13 +1,14 @@
 name: test action
+run-name: test action
 on:
   push:
     branches:
       - main
 
 jobs:
-  hello_world_job:
+  test-action:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: test action
     steps:
       - name: Hello world action step
         id: hello
