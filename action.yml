@@ -6,7 +6,7 @@ author: 'bling-yshs'
 inputs:
   token:
     description: 'Repo token'
-    default: ${{ github.repository }}
+    default: ${{ github.token }}
     required: false
   path:
     description: 'Some directories in the current repository'
@@ -16,7 +16,8 @@ inputs:
     default: '10'
     required: false
   branchName:
-    description: 'repo branch name'
+    description: 'repo branch name, default is default branch of the repository'
+    default: ''
     required: false
 
 runs:
