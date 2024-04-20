@@ -6,7 +6,7 @@ Refresh the cache of jsdelivr for a folder in the current repository
 
 ## Usage
 
-## Inputs
+### Inputs
 
 | name         | type               | Default               | Required | comment                                                                             |
 | ------------ | ------------------ | --------------------- | -------- | ----------------------------------------------------------------------------------- |
