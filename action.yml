@@ -2,6 +2,8 @@ name: 'purge-jsdelivr-for-directory'
 description:
   'Refresh the cache of jsdelivr for a folder in the current repository'
 author: 'bling-yshs'
+icon: 'activity'
+color: 'orange'
 
 inputs:
   token:
