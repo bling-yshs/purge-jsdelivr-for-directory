@@ -31126,7 +31126,7 @@ async function run() {
   // Loop through each path in result.path
   for (const path of result.path) {
     if (path === '') {
-      core.info(`📁:${typeof path}`)
+      core.info(`${JSON.stringify(github.context)}`)
     } else {
       core.info(`no path: ${path}`)
     }
