@@ -50,18 +50,15 @@ async function run() {
     } else {
       core.info(`no path: ${path}`)
     }
+
+    const route = `/repos/${github.context.payload.repository.owner.name}/${github.context.payload.repository.name}/contents/${path}?ref=${result.branchName}`
+    core.info(`route: ${route}`)
     // Make a request to the GitHub API
-    const response = await octokit.request(
-      `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
-      {
-        owner: github.context.payload.repository.owner.name,
-        repo: github.context.payload.repository.name,
-        path,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
-        }
+    const response = await octokit.request(`GET ${route}`, {
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
       }
-    )
+    })
     // Get the data from the response
     const infoList = response.data
     // Loop through each element in infoList
