@@ -31125,7 +31125,7 @@ async function run() {
   const octokit = github.getOctokit(result.token)
   // Loop through each path in result.path
   for (const path of result.path) {
-    core.info(`📁:${path}`)
+    core.info(`📁:${typeof path}`)
     // Make a request to the GitHub API
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
