@@ -4,9 +4,9 @@ const httpClient = require('@actions/http-client') // https://github.com/actions
 
 // read action inputs
 const actionInput = {
-  token: core.getInput('token', { required: true }),
+  token: core.getInput('token'),
   path: core
-    .getInput('path', { required: true })
+    .getInput('path')
     .split('\n')
     .map(path => path.trim()),
   retry: parseInt(core.getInput('retry'), 10),

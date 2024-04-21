@@ -31084,9 +31084,9 @@ const httpClient = __nccwpck_require__(6255) // https://github.com/actions/http-
 
 // read action inputs
 const actionInput = {
-  token: core.getInput('token', { required: true }),
+  token: core.getInput('token'),
   path: core
-    .getInput('path', { required: true })
+    .getInput('path')
     .split('\n')
     .map(path => path.trim()),
   retry: parseInt(core.getInput('retry'), 10),

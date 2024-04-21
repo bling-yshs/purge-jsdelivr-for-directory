@@ -12,7 +12,8 @@ inputs:
     default: ${{ github.token }}
   path:
     description: 'Some directories in the current repository'
-    required: true
+    required: false
+    default: ''
   retry:
     description: 'retry times for each file'
     required: false
