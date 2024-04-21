@@ -31102,8 +31102,6 @@ const result = {
 
 async function run() {
   core.info('start action')
-
-  core.info(`${JSON.stringify(github.context)}`)
   // processInput
   // token
   result.token = actionInput.token
@@ -31115,7 +31113,7 @@ async function run() {
   } else {
     result.retry = actionInput.retry
   }
-  // Set branchName to master_branch if it's empty, else set it to retry
+  // Set branchName to default_branch if it's empty, else set it to retry
   if (actionInput.branchName === '') {
     result.branchName = github.context.payload.repository.default_branch
   } else {
@@ -31128,10 +31126,6 @@ async function run() {
   // Loop through each path in result.path
   for (const path of result.path) {
     // Make a request to the GitHub API
-    core.info(`1: ${github.context.actor}`)
-    core.info(`2: ${github.context.payload.repository.name}`)
-    core.info(`3: ${path}`)
-    core.info(`4: ${result.branchName}`)
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
       {
