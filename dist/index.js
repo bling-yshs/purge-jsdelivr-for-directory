@@ -31102,6 +31102,8 @@ const result = {
 
 async function run() {
   core.info('start action')
+
+  core.info(`${JSON.stringify(github.context)}`)
   // processInput
   // token
   result.token = actionInput.token
@@ -31115,9 +31117,9 @@ async function run() {
   }
   // Set branchName to master_branch if it's empty, else set it to retry
   if (actionInput.branchName === '') {
-    result.branchName = github.context.payload.repository.master_branch
+    result.branchName = github.context.payload.repository.default_branch
   } else {
-    result.branchName = actionInput.retry
+    result.branchName = actionInput.branchName
   }
   // Initialize cdnList as an empty array
   const cdnList = []
@@ -31125,20 +31127,18 @@ async function run() {
   const octokit = github.getOctokit(result.token)
   // Loop through each path in result.path
   for (const path of result.path) {
-    if (path === '') {
-      core.info(`${JSON.stringify(github.context)}`)
-    } else {
-      core.info(`no path: ${path}`)
-    }
-
-    const route = `/repos/${github.context.payload.repository.owner.name}/${github.context.payload.repository.name}/contents/${path}?ref=${result.branchName}`
-    core.info(`route: ${route}`)
     // Make a request to the GitHub API
-    const response = await octokit.request(`GET ${route}`, {
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/contents/{path}?ref=${result.branchName}`,
+      {
+        owner: github.context.payload.repository.owner.name,
+        repo: github.context.payload.repository.name,
+        path,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
       }
-    })
+    )
     // Get the data from the response
     const infoList = response.data
     // Loop through each element in infoList
