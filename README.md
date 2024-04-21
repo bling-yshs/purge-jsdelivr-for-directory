@@ -7,12 +7,12 @@ repository.
 
 ### Inputs
 
-| name         | type               | Default               | Required | comment                                                                             |
-| ------------ | ------------------ | --------------------- | -------- | ----------------------------------------------------------------------------------- |
-| `token`      | `string`           | `${{ github.token }}` | false    | No need to set up                                                                   |
-| `path`       | `string` or `list` |                       | true     | The directories of the file that needs to "purge", support multiple directories     |
-| `retry`      | string             | 10                    | false    | If "purge" fails, the number of retries                                             |
-| `branchName` | string             |                       | false    | repository branch name, if left blank, it means is default branch of the repository |
+| name         | type               | Default               | Required | comment                                                                                                                                  |
+| ------------ | ------------------ | --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `token`      | `string`           | `${{ github.token }}` | false    | No need to set up                                                                                                                        |
+| `path`       | `string` or `list` | ''                    | false    | The directories of the file that needs to "purge", support multiple directories. If not input, the default is the root of the repository |
+| `retry`      | `string`           | 10                    | false    | If "purge" fails, the number of retries                                                                                                  |
+| `branchName` | `string`           |                       | false    | repository branch name, if left blank, it means is default branch of the repository                                                      |
 
 ### Example
 
