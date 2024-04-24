@@ -86,6 +86,9 @@ async function run() {
       // If the response status code is 200, log a success message and break the loop
       if (cdnResponse.message.statusCode === 200) {
         core.info(`✅️ ${url}`)
+        url.replace('https://purge.jsdelivr.net', 'https://cdn.jsdelivr.net')
+        core.info(`✅️ ${url}`)
+        core.info(`\n`)
         break
       }
     }
