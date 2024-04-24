@@ -31146,7 +31146,7 @@ async function run() {
         continue
       }
       // Construct the URL and add it to cdnList
-      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${infoListElement.path}`
+      const url = `https://purge.jsdelivr.net/gh/${github.context.payload.repository.full_name}@${result.branchName}/${encodeURI(infoListElement.path)}`
       cdnList.push(url)
     }
   }
